@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://Cluster-1:12345@cluster-1.efebpeb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster-1
+      database: university_db
+  application:
+    name: campus-management
+server:
+  port: 8080
