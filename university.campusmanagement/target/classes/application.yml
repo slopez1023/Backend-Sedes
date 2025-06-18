@@ -1,9 +1,60 @@
+# Configuración para desarrollo
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://Cluster-1:12345@cluster-1.efebpeb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster-1
+      uri: mongodb+srv://root:12345@cluster0.vybnhi3.mongodb.net/university_db?retryWrites=true&w=majority&appName=campus-management
       database: university_db
   application:
     name: campus-management
+
 server:
   port: 8080
+
+# Configuración de logging para debug
+logging:
+  level:
+    org.springframework.data.mongodb: DEBUG
+    com.example.university.campusmanagement: INFO
+    org.mongodb.driver: INFO
+
+# Configuración de health check
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+---
+# Perfil de desarrollo
+spring:
+  config:
+    activate:
+      on-profile: development
+  data:
+    mongodb:
+      uri: mongodb+srv://root:12345@cluster0.vybnhi3.mongodb.net/university_db_dev?retryWrites=true&w=majority&appName=campus-management-dev
+      database: university_db_dev
+
+logging:
+  level:
+    org.springframework.data.mongodb: DEBUG
+    com.example.university.campusmanagement: DEBUG
+
+---
+# Perfil de producción
+spring:
+  config:
+    activate:
+      on-profile: production
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb+srv://root:12345@cluster0.vybnhi3.mongodb.net/university_db?retryWrites=true&w=majority&appName=campus-management}
+      database: ${MONGODB_DATABASE:university_db}
+
+logging:
+  level:
+    org.springframework.data.mongodb: WARN
+    com.example.university.campusmanagement: INFO
